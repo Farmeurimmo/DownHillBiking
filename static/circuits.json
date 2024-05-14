@@ -1,0 +1,79 @@
+{
+  "test1": {
+    "name": "circuit 1",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "imgsrc": "https://www.outside.fr/wp-content/uploads/2021/03/The-ridgeline-Gee-Atherton.jpg",
+    "points": [
+      {
+        "time": 0,
+        "effX": 0,
+        "effY": 25
+      },
+      {
+        "time": 0.5,
+        "effX": 0,
+        "effY": 20
+      },
+      {
+        "time": 1,
+        "effX": 0,
+        "effY": 18
+      },
+      {
+        "time": 1.5,
+        "effX": 0,
+        "effY": 13
+      },
+      {
+        "time": 2,
+        "effX": 0,
+        "effY": 9
+      },
+      {
+        "time": 2.5,
+        "effX": 0,
+        "effY": 8
+      },
+      {
+        "time": 3,
+        "effX": 0,
+        "effY": 11
+      },
+      {
+        "time": 3.5,
+        "effX": 0,
+        "effY": 5
+      },
+      {
+        "time": 4,
+        "effX": 0,
+        "effY": 15
+      },
+      {
+        "time": 4.5,
+        "effX": 0,
+        "effY": 45
+      },
+      {
+        "time": 5,
+        "effX": 0,
+        "effY": 55
+      },
+      {
+        "time": 5.5,
+        "effX": 0,
+        "effY": 60
+      },
+      {
+        "time": 6,
+        "effX": 0,
+        "effY": 65
+      }
+    ]
+  },
+  "test2": {
+    "name": "circuit 2",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "imgsrc": "https://radiomontblanc.fr/photos/articles/vignettes/vtt_descente_47642.jpg"
+  }
+}
