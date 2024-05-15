@@ -85,18 +85,23 @@
 
     var port;
     var lineBuffer = '';
+
     async function getReader() {
         var port = await navigator.serial.requestPort({});
-        await port.open({ baudRate: 9600 });
+        await port.open({baudRate: 9600});
         const appendStream = new WritableStream({
             write(chunk) {
                 lineBuffer += chunk;
                 var lines = lineBuffer.split('\n');
                 while (lines.length > 1) {
-                    var message=lines.shift();
-                    document.getElementById("info").innerHTML=message;
+                    var message = lines.shift();
+                    //split in 3 parts at the | character
+                    var parts = message.split("|");
+                    updateCursorPosition3(parts[0]);
+                    document.getElementById("info").innerHTML = message;
                 }
                 lineBuffer = lines.pop();
+                isConnectedToBluetooth = true;
             }
         });
         port.readable
@@ -104,12 +109,12 @@
             .pipeTo(appendStream);
     }
 
-    function listSerial(){
+    function listSerial() {
         if (port) {
+            isConnectedToBluetooth = false;
             port.close();
             port = undefined;
-        }
-        else {
+        } else {
             console.log("Look for Serial Port")
             getReader();
         }
@@ -161,6 +166,7 @@
                 if (!running && startTime === 0) {
                     running = true;
                     startTime = Date.now();
+                    currentPosition = 0;
 
                     //schedule the update of the cursor 1 (the current effort), the cursor 2 (next effort to do)
                     let interval = setInterval(() => {
@@ -197,12 +203,27 @@
                 running = false;
                 startTime = 0;
             });
-            videoElement.play();
+
+            setInterval(() => {
+                if (document !== undefined) {
+                    let videoElement = document.querySelector('video');
+                    if (videoElement) {
+                        if (isConnectedToBluetooth) {
+                            if (videoElement.paused) {
+                                videoElement.play();
+                            }
+                        } else {
+                            videoElement.pause();
+                        }
+                    }
+                }
+            }, 100);
         }, 1_000);
     }
 
     let cursorPosition = 0;
     let cursorPosition2 = 0;
+    let cursorPosition3 = 0;
     const multiplier = 4.58;
     let points = {};
 
@@ -212,6 +233,10 @@
 
     function updateCursorPosition2(angle) {
         cursorPosition2 = angle * multiplier;
+    }
+
+    function updateCursorPosition3(angle) {
+        cursorPosition3 = angle * multiplier + 45 * multiplier;
     }
 
     let running = false;
@@ -232,11 +257,6 @@
     {#if waitingForCircuit}
         <div class="flex flex-col items-center space-y-8 p-4">
             <h1 class="hello leading-tight">Downhill Biking</h1>
-            <p class="text-xl">Merci de connecter le périphérique bluetooth (arduino).</p>
-
-            <button on:click={listSerial} class="bg-blue-600 p-6">Lister les ports série</button>
-            <div id="info"></div>
-
 
             <p class="text-xl">Ensuite, sélectionnez un circuit parmit ceux ci dessous</p>
             <div class="grid grid-cols-3 gap-2">
@@ -257,13 +277,13 @@
         </div>
     {:else}
         <div class="min-h-screen w-full">
-            <button class="fixed top-8 left-8 bg-gray-800 hover:bg-gray-700 text-white font-bold p-4 rounded-2xl gap-2 transition
+            <button class="fixed bottom-8 left-8 bg-gray-800 hover:bg-gray-700 text-white font-bold p-4 rounded-2xl gap-2 transition
                     duration-500 ease-in-out transform hover:-translate-y-1 focus:outline-black focus:bg-blue-700"
                     on:click={() => waitingForCircuit = true}>
                 <span class="text-4xl font-bold">Retour</span>
             </button>
             <div class="grid grid-cols-2 bg-gray-900">
-                <div class="grid grid-cols-2 min-h-screen">
+                <div class="grid grid-cols-2 mb-5">
                     <div class="flex flex-col items-end gap-5">
                         {#each Array(7) as _, index (index)}
                             <div class="text-5xl items-center gap-5 flex flex-row">
@@ -279,6 +299,9 @@
                         <div id="cursor2" class="h-12 absolute z-0" style="top: {cursorPosition2}px;">
                             <div class="arrow-left"></div>
                         </div>
+                        <div id="cursor3" class="h-12 absolute z-0" style="top: {cursorPosition3}px;">
+                            <div class="arrow-left"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="w-full">
@@ -288,6 +311,31 @@
                         Your browser does not support the video tag.
                         <track kind="captions" src="captions_en.vtt" srclang="en" label="English"/>
                     </video>
+                </div>
+            </div>
+            <div class="p-5">
+                <p class="text-4xl">{isConnectedToBluetooth ? 'Connecté' : 'Déconnecté, merci de connecter la carte Arduino en bluetooth'}</p>
+
+                <button on:click={listSerial}
+                        class="{!isConnectedToBluetooth ? 'bg-blue-900 hover:bg-blue-700' : 'bg-red-700 hover:bg-red-600'} text-white font-bold p-4 rounded-2xl gap-2 transition
+                    duration-500 ease-in-out transform hover:-translate-y-1 focus:outline-black m-4">{!isConnectedToBluetooth ? 'Connecter' : 'Déconnecter'}</button>
+                <div id="info"></div>
+
+                <p class="mt-10"/>
+                <h2 class="text-2xl">Légende des flèches</h2>
+                <div class="grid grid-cols-2 gap-2">
+                    <div class="flex flex-row items-center gap-2">
+                        <div class="h-12 w-12 bg-blue-500"></div>
+                        <p>Prochain effort</p>
+                    </div>
+                    <div class="flex flex-row items-center gap-2">
+                        <div class="h-12 w-12 bg-red-500"></div>
+                        <p>Effort à produire</p>
+                    </div>
+                    <div class="flex flex-row items-center gap-2">
+                        <div class="h-12 w-12 bg-green-500"></div>
+                        <p>Effort actuel</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -318,7 +366,15 @@
         border-right: 20px solid red;
     }
 
-    #cursor, #cursor2 {
+    #cursor3 .arrow-left {
+        width: 0;
+        height: 0;
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-right: 20px solid green;
+    }
+
+    #cursor, #cursor2, #cursor3 {
         transition: top 0.3s ease;
     }
 
