@@ -15,7 +15,6 @@
 
         console.log(circuitsData);
 
-        console.log("Starting noble...");
         setTimeout(() => {
 
             if (!navigator.bluetooth) {
@@ -23,7 +22,6 @@
                 return;
             }
 
-            console.log("Starting noble...");
             let buttonSearchForDevices = document.getElementById('search-for-devices');
             if (buttonSearchForDevices) {
                 console.log("adding event")
@@ -235,12 +233,6 @@
         <div class="flex flex-col items-center space-y-8 p-4">
             <h1 class="hello leading-tight">Downhill Biking</h1>
             <p class="text-xl">Merci de connecter le périphérique bluetooth (arduino).</p>
-
-            <button id="search-for-devices" class="{isConnectedToBluetooth ? 'bg-black' : 'bg-blue-600'} p-6">Lancer la
-                connexion bluetooth
-            </button>
-            <button id="disconnect" class="{isConnectedToBluetooth ? 'bg-green-700' : 'bg-black'} p-6">Déconnecter
-            </button>
 
             <button on:click={listSerial} class="bg-blue-600 p-6">Lister les ports série</button>
             <div id="info"></div>
