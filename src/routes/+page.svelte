@@ -236,7 +236,7 @@
     }
 
     function updateCursorPosition3(angle) {
-        cursorPosition3 = angle * multiplier + 45 * multiplier;
+        cursorPosition3 = angle * multiplier * 2 + 45 * multiplier;
     }
 
     let running = false;
@@ -277,7 +277,7 @@
         </div>
     {:else}
         <div class="min-h-screen w-full">
-            <button class="fixed bottom-8 left-8 bg-gray-800 hover:bg-gray-700 text-white font-bold p-4 rounded-2xl gap-2 transition
+            <button class="fixed bottom-2 right-40 bg-gray-800 hover:bg-gray-700 text-white font-bold p-4 rounded-2xl gap-2 transition
                     duration-500 ease-in-out transform hover:-translate-y-1 focus:outline-black focus:bg-blue-700"
                     on:click={() => waitingForCircuit = true}>
                 <span class="text-4xl font-bold">Retour</span>
@@ -314,26 +314,26 @@
                 </div>
             </div>
             <div class="p-5">
-                <p class="text-4xl">{isConnectedToBluetooth ? 'Connecté' : 'Déconnecté, merci de connecter la carte Arduino en bluetooth'}</p>
+                <p class="text-3xl">{isConnectedToBluetooth ? 'Connecté' : 'Déconnecté, merci de connecter la carte Arduino en bluetooth'}</p>
 
                 <button on:click={listSerial}
                         class="{!isConnectedToBluetooth ? 'bg-blue-900 hover:bg-blue-700' : 'bg-red-700 hover:bg-red-600'} text-white font-bold p-4 rounded-2xl gap-2 transition
                     duration-500 ease-in-out transform hover:-translate-y-1 focus:outline-black m-4">{!isConnectedToBluetooth ? 'Connecter' : 'Déconnecter'}</button>
-                <div id="info"></div>
+                <div id="info" class="text-2xl"></div>
 
-                <p class="mt-10"/>
+                <p class="mt-5"/>
                 <h2 class="text-2xl">Légende des flèches</h2>
                 <div class="grid grid-cols-2 gap-2">
                     <div class="flex flex-row items-center gap-2">
-                        <div class="h-12 w-12 bg-blue-500"></div>
+                        <div class="h-12 w-12 bg-blue-500 text-2xl"></div>
                         <p>Prochain effort</p>
                     </div>
                     <div class="flex flex-row items-center gap-2">
-                        <div class="h-12 w-12 bg-red-500"></div>
+                        <div class="h-12 w-12 bg-red-500 text-2xl"></div>
                         <p>Effort à produire</p>
                     </div>
                     <div class="flex flex-row items-center gap-2">
-                        <div class="h-12 w-12 bg-green-500"></div>
+                        <div class="h-12 w-12 bg-green-500 text-2xl"></div>
                         <p>Effort actuel</p>
                     </div>
                 </div>
