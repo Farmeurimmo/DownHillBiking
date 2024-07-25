@@ -64,11 +64,14 @@ void loop() {
     xbeeSerial.print("|");
     xbeeSerial.println(z);
 
+    // Pas obligatoire, mais permet de voir les valeurs sur le moniteur série
     Serial.print(x);
     Serial.print("|");
     Serial.print(y);
     Serial.print("|");
     Serial.println(z);
+    
+    // Attente de 50ms
     delay(50);
 }
 ```
