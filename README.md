@@ -29,7 +29,7 @@ prochain.
 
 ## Lancer le site pour du développement
 
-Vous avez besoin de [pnpm](https://pnpm.io/) et de node 18.+.+.
+Vous avez besoin de [pnpm](https://pnpm.io/) et de [node](https://nodejs.org/) 18.+.+.
 
 (pnpm recommandé, mais npm fonctionne)
 
