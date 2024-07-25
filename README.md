@@ -27,6 +27,19 @@ prochain.
 - Arduino
 - Bluetooth
 
+## Lancer le site pour du développement
+
+Vous avez besoin de [pnpm](https://pnpm.io/) et de node 18.+.+.
+
+(pnpm recommandé, mais npm fonctionne)
+
+```bash
+pnpm i
+pnpm dev
+```
+
+Aller sur http://localhost:5173/.
+
 ## Comment fonctionne le site ?
 
 Il faut connecter la carte arduino en bluetooth en utilisant google
