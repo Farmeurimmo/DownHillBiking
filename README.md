@@ -38,14 +38,14 @@ Le code de la carte arduino est ci-dessous :
 #include <SoftwareSerial.h>
 #include "MMA7660.h"
 
-MMA7660 accelemeter;
+MMA7660 accelerometer;
 const int RX = 2;
 const int TX = 3;
 
 SoftwareSerial xbeeSerial(RX, TX);
 
 void setup() {
-    accelemeter.init(); 
+    accelerometer.init(); 
      
     pinMode(RX, INPUT);
     pinMode(TX, OUTPUT);
@@ -57,7 +57,7 @@ void loop() {
     int8_t x;
     int8_t y;
     int8_t z;
-    accelemeter.getXYZ(&x,&y,&z); // Utilisation des pointeurs
+    accelerometer.getXYZ(&x,&y,&z); // Utilisation des pointeurs
     xbeeSerial.print(x);
     xbeeSerial.print("|");
     xbeeSerial.print(y);
