@@ -57,7 +57,7 @@ void loop() {
     int8_t x;
     int8_t y;
     int8_t z;
-    accelemeter.getXYZ(&x,&y,&z); # Utilisation des pointeurs
+    accelemeter.getXYZ(&x,&y,&z); // Utilisation des pointeurs
     xbeeSerial.print(x);
     xbeeSerial.print("|");
     xbeeSerial.print(y);
