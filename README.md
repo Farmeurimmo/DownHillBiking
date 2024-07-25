@@ -11,6 +11,22 @@ Le projet a reçu le prix de la réalisation de la part de NTN Annecy.
 Le projet consiste en la réalisation d'une machine de sport de descente de
 vélo. Le but est de simuler une descente de vélo en montagne.
 
+Sur le vélo, il y a un accéléromètre+gyroscope qui permet de mesurer l'inclinaison
+du vélo. Ces données sont envoyées à une carte arduino qui les envoie à un site
+web en bluetooth.
+
+Le site web affiche les données en temps réel et permet de visualiser la descente.
+Il y a 3 flèches, l'effort actuel, l'effort à fournir actuellement et l'effort
+prochain.
+
+## Technologies utilisées
+
+- HTML
+- CSS
+- Svelte
+- Arduino
+- Bluetooth
+
 ## Comment fonctionne le site ?
 
 Il faut connecter la carte arduino en bluetooth en utilisant google
